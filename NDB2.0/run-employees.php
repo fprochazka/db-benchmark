@@ -11,7 +11,7 @@ $useCache = TRUE;
 date_default_timezone_set('Europe/Prague');
 
 $connection = new Nette\Database\Connection(
-	'mysql:dbname=employees',
+	'mysql:host=127.0.0.1;dbname=employees;',
 	'root',
 	''
 );

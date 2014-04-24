@@ -9,7 +9,7 @@ $useCache = TRUE;
 $limit = 500;
 
 $connection = new PDO(
-	'mysql:dbname=employees',
+	'mysql:host=127.0.0.1;dbname=employees;',
 	'root',
 	''
 );

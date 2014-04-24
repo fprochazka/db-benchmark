@@ -6,6 +6,8 @@ namespace Benchmark;
 
 $useCache = TRUE;
 
+use Benchmark\Entities\Employee;
+use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Types\Type;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\Pagination\Paginator;
@@ -23,7 +25,7 @@ $cache = new \Doctrine\Common\Cache\FilesystemCache(__DIR__ . '/temp');
 
 $config = Setup::createAnnotationMetadataConfiguration(
 	[__DIR__ . '/Benchmark/Entities'],
-	TRUE,
+	!$useCache,
 	__DIR__ . '/Benchmark/Entities/Proxies',
 	$useCache ? $cache : NULL,
 	FALSE
@@ -45,6 +47,7 @@ $em = EntityManager::create(
 		'user'     => 'root',
 		'password' => '',
 		'dbname'   => 'employees',
+		'host'     => '127.0.0.1',
 	],
 	$config
 );

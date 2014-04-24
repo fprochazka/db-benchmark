@@ -24,6 +24,7 @@ $connection = new Connection(array(
 	'username' => 'root',
 	'password' => '',
 	'database' => 'employees',
+	'host' => '127.0.0.1',
 ));
 
 
