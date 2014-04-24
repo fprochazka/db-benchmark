@@ -4,12 +4,11 @@ namespace Benchmark;
 
 // based on https://github.com/Majkl578/employees-doctrine2
 
-$useCache = TRUE;
-
 use Benchmark\Entities\Employee;
-use Doctrine\DBAL\Connection;
+use Doctrine\Common\Cache\ApcCache;
 use Doctrine\DBAL\Types\Type;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Proxy\ProxyFactory;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\ORM\Tools\Setup;
 
@@ -21,17 +20,11 @@ if (@!include __DIR__ . '/vendor/autoload.php') {
 date_default_timezone_set('Europe/Prague');
 
 
-$cache = new \Doctrine\Common\Cache\FilesystemCache(__DIR__ . '/temp');
-
 $config = Setup::createAnnotationMetadataConfiguration(
-	[__DIR__ . '/Benchmark/Entities'],
-	!$useCache,
-	__DIR__ . '/Benchmark/Entities/Proxies',
-	$useCache ? $cache : NULL,
-	FALSE
+	[__DIR__ . '/Benchmark/Entities'], FALSE, __DIR__ . '/Benchmark/Entities/Proxies', NULL, FALSE
 );
 $config->setProxyNamespace('Benchmark\Entities\Proxies');
-$config->setAutoGenerateProxyClasses(TRUE);
+$config->setAutoGenerateProxyClasses(ProxyFactory::AUTOGENERATE_FILE_NOT_EXISTS);
 
 
 // we need __toString on DateTime, since UoW converts composite primary keys to string
